@@ -18,7 +18,7 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 ## 🛠️ Tecnologias Utilizadas
 
 - **Frontend:** HTML5, CSS3, JavaScript (React ou Vanilla JS)  
-- **Backend:** Node.js (Express)  
+- **Backend:** Python, Django  
 - **Banco de Dados:** MongoDB ou MySQL  
 - **Autenticação:** JWT ou OAuth 2.0  
 - **Hospedagem:** Vercel / Netlify (frontend) e Render / Heroku (backend)  
