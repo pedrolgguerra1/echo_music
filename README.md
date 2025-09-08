@@ -31,6 +31,8 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
  **Quadro Jira**
 ![Backlog do Echo](./9b9bcbfe-3674-4ebf-bd80-5903eb4a3c72.png)
 
+[📄 **Documentação no Google Docs**](https://docs.google.com/document/d/1iIE2TN-brDPJG4-VLgA5vC3a-OJslN4rudeJ6qXee54/edit?tab=t.0#heading=h.ydhtqjk9ltrr)
+
 [▶️ **Screencast Figma**](https://youtu.be/5f4h1V8EvZw?si=Puvt2TmS40G6oNOg)
 </details>
 
