@@ -26,6 +26,6 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 
 ## Entrega 1
 
-**Quadro Jira:** 
+![Quadro Jira](C:\Users\Guerra\Desktop\ech0\echo_music\Backlog.jpg)
 
 [▶️ **Screencast Figma**](https://youtu.be/5f4h1V8EvZw?si=Puvt2TmS40G6oNOg)
