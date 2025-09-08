@@ -22,3 +22,10 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 - **Banco de Dados:** MongoDB ou MySQL  
 - **Autenticação:** JWT ou OAuth 2.0  
 - **Hospedagem:** Vercel / Netlify (frontend) e Render / Heroku (backend)  
+
+
+## Entrega 1
+
+**Quadro Jira:** 
+
+[▶️ **Screencast Figma**](https://youtu.be/5f4h1V8EvZw?si=Puvt2TmS40G6oNOg)
