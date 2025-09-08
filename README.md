@@ -24,8 +24,12 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 - **Hospedagem:** Vercel / Netlify (frontend) e Render / Heroku (backend)  
 
 
-## Entrega 1
+## Entregas
+<details>
+<summary>✅Entrega 01</summary>
 
+  - **Quadro Jira**
 ![Backlog do Echo](./9b9bcbfe-3674-4ebf-bd80-5903eb4a3c72.png)
 
 [▶️ **Screencast Figma**](https://youtu.be/5f4h1V8EvZw?si=Puvt2TmS40G6oNOg)
+</details>
