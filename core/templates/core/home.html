@@ -1,0 +1,178 @@
+{% extends 'base.html' %}
+
+{% block title %}Echo Music - Home{% endblock %}
+
+{% block content %}
+<div class="sidebar">
+    <div class="header">
+        <div class="logo">echo</div>
+    </div>
+    
+    {% if user.is_authenticated %}
+        <h3>Suas Playlists</h3>
+        {% for playlist in playlists %}
+            <div class="playlist-item" onclick="location.href='{% url 'playlist_detail' playlist.id %}'">
+                <div>
+                    <strong>{{ playlist.name }}</strong><br>
+                    <small>{{ playlist.get_music_count }} músicas</small>
+                </div>
+            </div>
+        {% empty %}
+            <p>Nenhuma playlist criada ainda.</p>
+            <button class="btn" onclick="location.href='{% url 'create_playlist' %}'">
+                Criar Playlist
+            </button>
+        {% endfor %}
+        
+        {% if playlists %}
+            <button class="btn" onclick="location.href='{% url 'create_playlist' %}'" style="margin-top: 20px;">
+                Nova Playlist
+            </button>
+        {% endif %}
+    {% else %}
+        <p>Faça login para ver suas playlists</p>
+        <button class="btn" onclick="location.href='/admin/'">Login</button>
+    {% endif %}
+</div>
+
+<div class="main-content">
+    <div class="header">
+        <h1>Home page</h1>
+    </div>
+    
+    <div class="search-container">
+        <form method="GET">
+            <input type="text" 
+                   name="search" 
+                   class="search-input" 
+                   placeholder="Buscar_" 
+                   value="{{ search_query }}"
+                   id="searchInput">
+        </form>
+    </div>
+    
+    {% if search_query %}
+        <h2>Resultados para "{{ search_query }}"</h2>
+    {% else %}
+        <h2>Descubra novas músicas</h2>
+    {% endif %}
+    
+    <div class="music-grid">
+        {% for music in musics %}
+            <div class="music-card">
+                <h3>{{ music.title }}</h3>
+                <p>{{ music.artist.name }}</p>
+                <p>{{ music.duration }}</p>
+                {% if user.is_authenticated %}
+                    <button class="btn" onclick="showAddToPlaylistModal({{ music.id }}, '{{ music.title }}')">
+                        Adicionar à Playlist
+                    </button>
+                {% endif %}
+            </div>
+        {% empty %}
+            {% if search_query %}
+                <p>Nenhuma música encontrada para "{{ search_query }}".</p>
+            {% else %}
+                <p>Nenhuma música disponível no momento.</p>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    {% if not search_query %}
+        <div style="margin-top: 40px;">
+            <h2>Mais Gêneros</h2>
+            <div class="music-grid">
+                <div class="music-card">
+                    <h3>Músicas para relaxar</h3>
+                    <p>Playlist curada</p>
+                </div>
+                <div class="music-card">
+                    <h3>Viagem</h3>
+                    <p>Playlist curada</p>
+                </div>
+                <div class="music-card">
+                    <h3>Balada</h3>
+                    <p>Playlist curada</p>
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</div>
+
+<!-- Modal para adicionar música à playlist -->
+<div id="playlistModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); padding: 30px; border-radius: 15px; min-width: 300px;">
+        <h3>Adicionar à Playlist</h3>
+        <p id="musicTitle"></p>
+        <div id="playlistList" style="margin: 20px 0;">
+            {% for playlist in playlists %}
+                <button class="btn" style="display: block; width: 100%; margin-bottom: 10px;" 
+                        onclick="addToPlaylist({{ playlist.id }}, currentMusicId)">
+                    {{ playlist.name }}
+                </button>
+            {% endfor %}
+        </div>
+        <button class="btn" onclick="closeModal()">Cancelar</button>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+let currentMusicId = null;
+
+function showAddToPlaylistModal(musicId, musicTitle) {
+    currentMusicId = musicId;
+    document.getElementById('musicTitle').textContent = musicTitle;
+    document.getElementById('playlistModal').style.display = 'block';
+}
+
+function closeModal() {
+    document.getElementById('playlistModal').style.display = 'none';
+}
+
+function addToPlaylist(playlistId, musicId) {
+    fetch(`/playlists/${playlistId}/add-music/`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+        body: `music_id=${musicId}`
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert(data.message);
+            closeModal();
+        } else {
+            alert(data.message);
+        }
+    });
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+// Auto-submit search form on input
+document.getElementById('searchInput').addEventListener('input', function() {
+    clearTimeout(this.searchTimeout);
+    this.searchTimeout = setTimeout(() => {
+        this.form.submit();
+    }, 500);
+});
+</script>
+{% endblock %}
+

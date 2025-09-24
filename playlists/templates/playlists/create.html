@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}Criar Playlist - Echo Music{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="header">
+        <div class="logo">echo</div>
+        <h1>Criar Nova Playlist</h1>
+    </div>
+    
+    <div style="max-width: 500px; margin: 0 auto;">
+        <form method="POST" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 15px; padding: 30px;">
+            {% csrf_token %}
+            <div style="margin-bottom: 20px;">
+                <label for="name" style="display: block; margin-bottom: 10px; font-weight: bold;">
+                    Nome da Playlist:
+                </label>
+                <input type="text" 
+                       id="name" 
+                       name="name" 
+                       required 
+                       style="width: 100%; padding: 15px; border: none; border-radius: 10px; background: rgba(255, 255, 255, 0.1); color: white; font-size: 16px;"
+                       placeholder="Digite o nome da sua playlist">
+            </div>
+            
+            <div style="text-align: center;">
+                <button type="submit" class="btn" style="background: rgba(76, 175, 80, 0.3); margin-right: 10px;">
+                    Criar Playlist
+                </button>
+                <button type="button" class="btn" onclick="location.href='{% url 'home' %}'">
+                    Cancelar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}
+
