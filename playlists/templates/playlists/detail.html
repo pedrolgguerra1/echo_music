@@ -1,0 +1,121 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ playlist.name }} - Echo Music{% endblock %}
+
+{% block content %}
+<div class="sidebar">
+    <div class="header">
+        <div class="logo">echo</div>
+    </div>
+    
+    <h3>Suas Playlists</h3>
+    <div class="playlist-item" onclick="location.href='{% url 'home' %}'">
+        <div>← Voltar ao Home</div>
+    </div>
+    
+    {% if user.playlists.all %}
+        {% for user_playlist in user.playlists.all %}
+            <div class="playlist-item {% if user_playlist.id == playlist.id %}active{% endif %}" 
+                 onclick="location.href='{% url 'playlist_detail' user_playlist.id %}'">
+                <div>
+                    <strong>{{ user_playlist.name }}</strong><br>
+                    <small>{{ user_playlist.get_music_count }} músicas</small>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+</div>
+
+<div class="main-content">
+    <div class="header">
+        <h1>Playlist</h1>
+    </div>
+    
+    <div class="search-container">
+        <input type="text" class="search-input" placeholder="Buscar_" readonly>
+    </div>
+    
+    <div style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 15px; padding: 30px; margin-bottom: 30px;">
+        <h2>{{ playlist.name }}</h2>
+        <p>{{ playlist.user.username }} • {{ playlist.get_music_count }} músicas, {{ playlist.get_total_duration }} mins</p>
+    </div>
+    
+    <div class="music-list">
+        {% for music in musics %}
+            <div class="music-item" style="display: flex; align-items: center; padding: 15px; margin-bottom: 10px; background: rgba(255, 255, 255, 0.1); border-radius: 10px;">
+                <div style="margin-right: 20px; font-weight: bold; color: rgba(255, 255, 255, 0.7);">
+                    {{ forloop.counter }}
+                </div>
+                <div style="flex: 1;">
+                    <div style="font-weight: bold;">{{ music.title }}</div>
+                    <div style="color: rgba(255, 255, 255, 0.7);">{{ music.artist.name }}</div>
+                </div>
+                <div style="margin-right: 20px; color: rgba(255, 255, 255, 0.7);">
+                    {{ music.duration }}
+                </div>
+                <button class="btn" onclick="removeFromPlaylist({{ music.id }}, '{{ music.title }}')" 
+                        style="background: rgba(244, 67, 54, 0.3);">
+                    Remover
+                </button>
+            </div>
+        {% empty %}
+            <div style="text-align: center; padding: 50px;">
+                <h3>Esta playlist está vazia</h3>
+                <p>Adicione algumas músicas para começar!</p>
+                <button class="btn" onclick="location.href='{% url 'home' %}'">
+                    Buscar Músicas
+                </button>
+            </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_css %}
+<style>
+.active {
+    background: rgba(255, 255, 255, 0.3) !important;
+}
+</style>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+function removeFromPlaylist(musicId, musicTitle) {
+    if (confirm(`Tem certeza que deseja remover "${musicTitle}" da playlist?`)) {
+        fetch(`/playlists/{{ playlist.id }}/remove-music/`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+                'X-CSRFToken': getCookie('csrftoken')
+            },
+            body: `music_id=${musicId}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                location.reload();
+            } else {
+                alert(data.message);
+            }
+        });
+    }
+}
+
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+</script>
+{% endblock %}
+
