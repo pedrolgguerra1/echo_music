@@ -1,28 +1,89 @@
-# Byte-code files
-*.pyc
+# Byte-compiled / cache
 __pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
 
-# Django stuff:
+# Virtualenv
+venv/
+ENV/
+env/
+.venv/
+
+# Django stuff
 *.log
 *.pot
+*.pyc
 *.mo
-*.sqlite3
-*.db
-*.db-journal
+db.sqlite3
+media/
+staticfiles/
+local_settings.py
 
-# Environments
-.env
-venv/
-env/
+# Django migrations (opcional, caso queira ignorar)
+# */migrations/*
+# !*/migrations/__init__.py
 
-# IDEs
+# VS Code
 .vscode/
+*.code-workspace
+
+# PyCharm
 .idea/
 
-# OS generated files
+# MacOS
 .DS_Store
-.Trashes
+
+# Windows
 Thumbs.db
 
-# My stuff
-populate_data.py
+# Coverage / Testing
+.coverage
+.tox/
+nosetests.xml
+coverage.xml
+htmlcov/
+
+# Pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# MyPy
+.mypy_cache/
+
+# Pytest
+.cache/
+.pytest_cache/
+
+# dotenv
+.env
+*.env
+# Environment variables
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Logs
+logs/
+*.log.*
+
+# Node (if using any JS tooling)
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Build outputs
+build/
+dist/
+*.egg-info/
+.pytest_cache/
+
+# IDE
+*.swp
+*.swo
+*~
+
+# Jupyter
