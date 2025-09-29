@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Echo Music - Home{% endblock %}
 
 {% block content %}
 <div class="sidebar">
     <div class="header">
-        <div class="logo">echo</div>
+        <img src="{% static 'Imagem_do_WhatsApp_de_2025-08-26_as_11.21.32_6d6c769a-removebg-preview.png' %}" alt="Echo Logo" style="max-width: 150px; height: auto; margin-bottom: 20px;">
     </div>
     
     {% if user.is_authenticated %}
