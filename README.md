@@ -23,10 +23,9 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 - **Autenticação:** JWT ou OAuth 2.0  
 - **Hospedagem:** Vercel / Netlify (frontend) e Render / Heroku (backend)  
 
-
 ## Entregas
 <details>
-<summary>✅Entrega 01</summary>
+<summary>✅Entrega - 01</summary>
 
  **Quadro Jira**
 ![Backlog do Echo](./9b9bcbfe-3674-4ebf-bd80-5903eb4a3c72.png)
