@@ -1,5 +1,20 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login as auth_login
+from django.contrib import messages
+
+def signup(request):
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            messages.success(request, "Cadastro realizado com sucesso!")
+            return redirect('home')
+    else:
+        form = UserCreationForm()
+    return render(request, 'registration/signup.html', {'form': form})
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
