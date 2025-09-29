@@ -140,3 +140,8 @@ STATIC_ROOT = BASE_DIR / "staticfiles"   # usado em produção (collectstatic)
 STATICFILES_DIRS = [
     BASE_DIR / "static",  # pasta static/ na raiz do projeto
 ]
+
+# Serve static files in development for admin
+if DEBUG:
+    import mimetypes
+    mimetypes.add_type("application/javascript", ".js", True)

@@ -34,6 +34,9 @@
         <button class="btn" onclick="location.href='/accounts/login/'">Login</button>
         <button class="btn" onclick="location.href='/signup/'" style="margin-left: 10px;">Cadastro</button>
     {% endif %}
+    {% if user.is_authenticated %}
+        <button class="btn" style="margin-top: 20px;" onclick="location.href='/music/upload/'">Adicionar Música</button>
+    {% endif %}
 </div>
 
 <div class="main-content">

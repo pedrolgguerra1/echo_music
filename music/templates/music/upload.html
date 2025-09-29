@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Upload de Música - Echo Music{% endblock %}
+
+{% block content %}
+<div class="container" style="max-width: 600px; margin: 40px auto; background: rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 15px; backdrop-filter: blur(10px); color: white;">
+    <h2 style="text-align: center; margin-bottom: 20px;">Upload de Música</h2>
+    {% if error %}
+        <div style="background: rgba(244, 67, 54, 0.8); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+            {{ error }}
+        </div>
+    {% endif %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        <label for="title">Título:</label>
+        <input type="text" name="title" id="title" class="form-input" required>
+
+        <label for="artist">Artista:</label>
+        <select name="artist" id="artist" class="form-input" required>
+            <option value="">Selecione um artista</option>
+            {% for artist in artists %}
+                <option value="{{ artist.id }}">{{ artist.name }}</option>
+            {% endfor %}
+        </select>
+
+        <label for="duration">Duração (ex: 3:45):</label>
+        <input type="text" name="duration" id="duration" class="form-input" required>
+
+        <label for="file_url">Arquivo de Música:</label>
+        <input type="file" name="file_url" id="file_url" class="form-input" accept="audio/*" required>
+
+        <label for="cover">Capa (opcional):</label>
+        <input type="file" name="cover" id="cover" class="form-input" accept="image/*">
+
+        <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 16px; margin-top: 20px;">Enviar</button>
+    </form>
+</div>
+{% endblock %}
