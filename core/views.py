@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 from django.db.models import Q
 from django.http import JsonResponse
 from music.models import Music, Artist
@@ -55,3 +56,20 @@ def search_music(request):
         return JsonResponse({'results': results})
     
     return JsonResponse({'results': []})
+
+
+def signup(request):
+    """Página de cadastro de usuário"""
+    if request.method == 'POST':
+        form = UserCreationForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            login(request, user)
+            messages.success(request, 'Conta criada com sucesso!')
+            return redirect('home')
+        else:
+            messages.error(request, 'Erro ao criar conta. Verifique os dados.')
+    else:
+        form = UserCreationForm()
+    
+    return render(request, 'registration/signup.html', {'form': form})
