@@ -50,7 +50,7 @@ INSTALLED_APPS = [
     'playlists',
 
     # extras
-    'django_widget_tweaks',
+    'widget_tweaks',
 ]
 
 MIDDLEWARE = [
