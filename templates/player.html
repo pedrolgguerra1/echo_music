@@ -1,133 +1,173 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <title>Echo Player</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-</head>
-<body class="bg-gradient-to-br from-[#0f0f0f] via-[#1b0c1d] to-[#3b0a45] text-white h-screen p-6 flex gap-6 font-sans">
+{% block content %}
 
-    <!-- PLAYER -->
-    <div class="flex flex-col items-center bg-white/5 backdrop-blur-xl rounded-3xl p-6 w-1/3 shadow-2xl border border-white/10">
-        <!-- Capa -->
-        {% if current_music.cover %}
-          <img src="{{ current_music.cover.url }}" alt="Album" class="rounded-2xl mb-6 w-64 h-64 object-cover shadow-lg">
+<div class="flex h-screen bg-gradient-to-b from-indigo-700 via-purple-700 to-purple-800 text-white p-6 gap-6">
+
+  <!-- 🎵 Player (lado esquerdo) -->
+  <div class="w-1/3 bg-white/10 rounded-2xl p-6 flex flex-col items-center shadow-xl backdrop-blur relative">
+
+    <!-- Capa do álbum (fallback se não tiver) -->
+    {% if current_music and current_music.cover %}
+      <img src="{{ current_music.cover.url }}" alt="Capa do Álbum" class="rounded-xl w-full h-80 object-cover mb-6 shadow-lg">
+    {% else %}
+      <img src="{% static 'images/default_cover.jpg' %}" alt="Capa padrão" class="rounded-xl w-full h-80 object-cover mb-6 shadow-lg">
+    {% endif %}
+
+    <!-- Info música -->
+    <h2 class="text-xl font-bold text-center">{{ current_music.title|default:"Título da Música" }}</h2>
+    <p class="opacity-80 mb-6 text-center">
+      {% if current_music %}{{ current_music.artist.name }}{% else %}Artista{% endif %}
+    </p>
+
+    <!-- Controles -->
+    <div class="flex items-center justify-center gap-6 mb-6">
+      <button id="prevBtn" class="w-12 h-12 rounded-full bg-purple-500/30 hover:bg-purple-500 flex items-center justify-center text-2xl shadow-lg">⏮️</button>
+      <button id="playBtn" class="w-14 h-14 rounded-full bg-purple-600 hover:bg-purple-500 flex items-center justify-center text-2xl shadow-lg">▶️</button>
+      <button id="nextBtn" class="w-12 h-12 rounded-full bg-purple-500/30 hover:bg-purple-500 flex items-center justify-center text-2xl shadow-lg">⏭️</button>
+    </div>
+
+    <!-- Barra de tempo -->
+    <div class="w-full mb-4">
+      <div class="flex justify-between text-xs opacity-70 mb-1">
+        <span id="timeCurrent">0:00</span>
+        <span id="timeTotal">{{ current_music.duration|default:"0:00" }}</span>
+      </div>
+      <input id="progress" type="range" min="0" max="100" value="0" class="w-full accent-purple-500">
+    </div>
+
+    <!-- Volume -->
+    <div class="flex items-center gap-3 w-full">
+      <span>🔉</span>
+      <input id="volume" type="range" min="0" max="100" value="70" class="w-full accent-purple-500">
+      <span>🔊</span>
+    </div>
+  </div>
+
+  <!-- 📂 Coluna direita -->
+  <div class="flex-1 flex flex-col gap-6">
+
+    <!-- 🔍 Barra de busca + usuário -->
+    <div class="flex justify-between items-center bg-white/10 rounded-xl p-3 shadow-md">
+      <input type="text" placeholder="Buscar..." class="bg-transparent outline-none w-full px-2 text-white placeholder-gray-300">
+      <img src="{% if request.user.is_authenticated and request.user.profile.image %}{{ request.user.profile.image.url }}{% else %}{% static 'images/default_user.png' %}{% endif %}"
+           alt="User" class="w-10 h-10 rounded-full ml-4">
+    </div>
+
+    <!-- 🖼️ Mostruário (grid de álbuns/playlists) -->
+    <div class="grid grid-cols-3 gap-4">
+      {% for item in showcase_items %}
+      <div class="bg-white/10 rounded-xl overflow-hidden shadow-md hover:scale-105 transform transition duration-300 cursor-pointer">
+        {% if item.cover %}
+          <img src="{{ item.cover.url }}" alt="{{ item.title }}" class="w-full h-32 object-cover">
         {% else %}
-          <img src="{% static 'img/default_cover.jpg' %}" alt="Album" class="rounded-2xl mb-6 w-64 h-64 object-cover shadow-lg">
+          <img src="{% static 'images/default_showcase.jpg' %}" alt="{{ item.title }}" class="w-full h-32 object-cover">
         {% endif %}
-
-        <!-- Info -->
-        <h3 class="text-xl font-semibold">{{ current_music.title }}</h3>
-        <p class="text-sm text-gray-400">{{ current_music.artist }}</p>
-
-        <!-- Controles -->
-        <div class="flex items-center justify-center gap-8 my-6">
-            <button class="text-2xl hover:text-purple-400 transition">⏮️</button>
-            <button id="playBtn" class="bg-gradient-to-r from-purple-500 to-pink-500 rounded-full w-16 h-16 flex items-center justify-center shadow-xl text-2xl hover:scale-105 transition">▶️</button>
-            <button class="text-2xl hover:text-purple-400 transition">⏭️</button>
+        <div class="p-2">
+          <p class="font-semibold truncate">{{ item.title }}</p>
+          <p class="text-sm opacity-70 truncate">{% if item.artist %}{{ item.artist.name }}{% endif %}</p>
         </div>
-
-        <!-- Barra de progresso -->
-        <input type="range" id="progress" value="0" class="w-full accent-purple-500">
-
-        <!-- Tempo -->
-        <div class="flex justify-between text-xs text-gray-400 w-full mt-1">
-            <span id="currentTime">0:00</span>
-            <span id="totalTime">0:00</span>
-        </div>
-
-        <!-- Volume -->
-        <div class="flex items-center gap-2 mt-6 w-full">
-            <span>🔊</span>
-            <input type="range" min="0" max="100" value="50" id="volume" class="w-full accent-purple-500">
-        </div>
-
-        <!-- Áudio -->
-        <audio id="audioPlayer" src="{{ current_music.file.url }}"></audio>
+      </div>
+      {% empty %}
+      <p class="opacity-70 col-span-3">Nenhum destaque no momento ✨</p>
+      {% endfor %}
     </div>
 
-    <!-- LATERAL DIREITA -->
-    <div class="flex-1 grid grid-cols-2 gap-6">
-        <!-- Próximas músicas -->
-        <div class="bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10 shadow-lg">
-            <h4 class="font-bold mb-4 text-lg">Em seguida</h4>
-            {% for m in queue %}
-              <div class="flex items-center gap-3 mb-4 hover:bg-white/10 p-2 rounded-lg transition">
-                  {% if m.cover %}
-                    <img src="{{ m.cover.url }}" class="w-12 h-12 rounded object-cover shadow">
-                  {% else %}
-                    <img src="{% static 'img/default_cover.jpg' %}" class="w-12 h-12 rounded object-cover shadow">
-                  {% endif %}
-                  <div>
-                      <p class="font-medium">{{ m.title }}</p>
-                      <span class="text-sm text-gray-400">{{ m.duration }}</span>
-                  </div>
-              </div>
-            {% empty %}
-              <p class="text-gray-400">Nenhuma música na fila.</p>
-            {% endfor %}
-        </div>
+    <!-- Em seguida + Playlists -->
+    <div class="flex gap-6 flex-1">
 
-        <!-- Suas playlists -->
-        <div class="bg-white/5 backdrop-blur-xl rounded-2xl p-4 border border-white/10 shadow-lg">
-            <h4 class="font-bold mb-4 text-lg">Suas playlists</h4>
-            {% for pl in playlists %}
-              <div class="flex items-center gap-3 mb-4 hover:bg-white/10 p-2 rounded-lg transition">
-                  {% if pl.cover %}
-                    <img src="{{ pl.cover.url }}" class="w-12 h-12 rounded object-cover shadow">
-                  {% else %}
-                    <img src="{% static 'img/default_cover.jpg' %}" class="w-12 h-12 rounded object-cover shadow">
-                  {% endif %}
-                  <p class="font-medium">{{ pl.name }}</p>
-              </div>
-            {% empty %}
-              <p class="text-gray-400">Você ainda não tem playlists.</p>
-            {% endfor %}
+      <!-- 🎶 Em seguida -->
+      <div class="flex-1 bg-white/10 rounded-xl p-4 shadow-md flex flex-col">
+        <h3 class="text-lg font-semibold mb-4">Em seguida:</h3>
+
+        {% for music in next_musics %}
+        <div class="flex items-center gap-3 mb-3 bg-black/30 p-2 rounded-lg shadow
+                    hover:bg-purple-600/40 hover:scale-105 transform transition duration-300 cursor-pointer">
+          {% if music.cover %}
+            <img src="{{ music.cover.url }}" class="w-12 h-12 rounded-md">
+          {% else %}
+            <img src="{% static 'images/default_cover.jpg' %}" class="w-12 h-12 rounded-md">
+          {% endif %}
+          <div>
+            <p class="font-semibold">{{ music.title }}</p>
+            <span class="text-sm opacity-70">{{ music.duration|default:"--:--" }}</span>
+          </div>
         </div>
+        {% empty %}
+        <p class="opacity-70">Nenhuma música na fila 🎶</p>
+        {% endfor %}
+      </div>
+
+      <!-- 📀 Suas playlists -->
+      <div class="flex-1 bg-white/10 rounded-xl p-4 shadow-md flex flex-col">
+        <h3 class="text-lg font-semibold mb-4">Suas playlists:</h3>
+
+        {% for playlist in playlists %}
+        <div class="flex items-center gap-3 mb-3 bg-black/30 p-2 rounded-lg shadow
+                    hover:bg-purple-600/40 hover:scale-105 transform transition duration-300 cursor-pointer">
+          {% if playlist.cover %}
+            <img src="{{ playlist.cover.url }}" class="w-12 h-12 rounded-md">
+          {% else %}
+            <img src="{% static 'images/default_playlist.jpg' %}" class="w-12 h-12 rounded-md">
+          {% endif %}
+          <span>{{ playlist.name }}</span>
+        </div>
+        {% empty %}
+        <p class="opacity-70">Você ainda não tem playlists 📂</p>
+        {% endfor %}
+      </div>
+
     </div>
+  </div>
+
+</div>
+
+<!-- Player de áudio oculto -->
+<audio id="audio-player" preload="metadata"></audio>
 
 <script>
-  const audio = document.getElementById("audioPlayer");
-  const playBtn = document.getElementById("playBtn");
-  const progress = document.getElementById("progress");
-  const volume = document.getElementById("volume");
-  const currentTimeEl = document.getElementById("currentTime");
-  const totalTimeEl = document.getElementById("totalTime");
+  // JS básico para sincronizar controles (exemplo simples)
+  const playBtn = document.getElementById('playBtn');
+  const audio = document.getElementById('audio-player');
+  const volume = document.getElementById('volume');
+  const progress = document.getElementById('progress');
+  const timeCurrent = document.getElementById('timeCurrent');
+  const timeTotal = document.getElementById('timeTotal');
 
-  function formatTime(seconds) {
-    const min = Math.floor(seconds / 60);
-    const sec = Math.floor(seconds % 60);
-    return `${min}:${sec < 10 ? "0" : ""}${sec}`;
-  }
+  // Se current_music tiver file_url, já seta
+  {% if current_music and current_music.file_url %}
+  audio.src = "{{ current_music.file_url }}";
+  {% endif %}
 
-  playBtn.addEventListener("click", () => {
+  playBtn.addEventListener('click', () => {
     if (audio.paused) {
       audio.play();
-      playBtn.textContent = "⏸️";
+      playBtn.innerText = '⏸️';
     } else {
       audio.pause();
-      playBtn.textContent = "▶️";
+      playBtn.innerText = '▶️';
     }
   });
 
-  audio.addEventListener("loadedmetadata", () => {
-    totalTimeEl.textContent = formatTime(audio.duration);
+  volume.addEventListener('input', (e) => {
+    audio.volume = e.target.value / 100;
   });
 
-  audio.addEventListener("timeupdate", () => {
-    progress.value = (audio.currentTime / audio.duration) * 100;
-    currentTimeEl.textContent = formatTime(audio.currentTime);
+  audio.addEventListener('timeupdate', () => {
+    if (audio.duration) {
+      const percent = (audio.currentTime / audio.duration) * 100;
+      progress.value = percent;
+      const format = t => Math.floor(t/60) + ':' + String(Math.floor(t%60)).padStart(2,'0');
+      timeCurrent.innerText = format(audio.currentTime);
+      timeTotal.innerText = format(audio.duration);
+    }
   });
 
-  progress.addEventListener("input", () => {
-    audio.currentTime = (progress.value / 100) * audio.duration;
-  });
-
-  volume.addEventListener("input", () => {
-    audio.volume = volume.value / 100;
+  progress.addEventListener('input', (e) => {
+    if (audio.duration) {
+      audio.currentTime = (e.target.value / 100) * audio.duration;
+    }
   });
 </script>
 
-</body>
-</html>
+{% endblock %}

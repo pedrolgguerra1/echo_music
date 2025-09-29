@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Echo Music{% endblock %}</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
         * {
             margin: 0;
@@ -148,7 +149,7 @@
     </style>
     {% block extra_css %}{% endblock %}
 </head>
-<body>
+<body class="bg-gradient-to-b from-indigo-700 via-purple-700 to-purple-800 text-white min-h-screen">
     {% if messages %}
         <div class="messages">
             {% for message in messages %}
@@ -173,6 +174,7 @@
             });
         }, 5000);
     </script>
+
     {% block extra_js %}{% endblock %}
 </body>
 </html>
