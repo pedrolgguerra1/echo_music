@@ -1,11 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Echo Music - Home{% endblock %}
 
 {% block content %}
 <div class="sidebar">
     <div class="header">
-        <div class="logo">echo</div>
+        <img src="{% static 'Imagem_do_WhatsApp_de_2025-08-26_as_11.21.32_6d6c769a-removebg-preview.png' %}" alt="Echo Logo" style="max-width: 150px; height: auto; margin-bottom: 20px;">
     </div>
     
     {% if user.is_authenticated %}
@@ -31,7 +32,11 @@
         {% endif %}
     {% else %}
         <p>Faça login para ver suas playlists</p>
-        <button class="btn" onclick="location.href='/admin/'">Login</button>
+        <button class="btn" onclick="location.href='/accounts/login/'">Login</button>
+        <button class="btn" onclick="location.href='/signup/'" style="margin-left: 10px;">Cadastro</button>
+    {% endif %}
+    {% if user.is_authenticated %}
+        <button class="btn" style="margin-top: 20px;" onclick="location.href='/music/upload/'">Adicionar Música</button>
     {% endif %}
 </div>
 

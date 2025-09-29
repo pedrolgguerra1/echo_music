@@ -1,0 +1,83 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Cadastro - Echo Music{% endblock %}
+
+{% block content %}
+<div class="container" style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+    <div class="signup-card" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 15px; padding: 40px; max-width: 400px; width: 100%;">
+        <div style="text-align: center; margin-bottom: 20px;">
+            <img src="{% static 'Imagem_do_WhatsApp_de_2025-08-26_as_11.21.32_6d6c769a-removebg-preview.png' %}" alt="Echo Logo" style="max-width: 200px; height: auto;">
+        </div>
+        <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem;">Cadastro</h2>
+        
+        <form method="post">
+            {% csrf_token %}
+            <div style="margin-bottom: 20px;">
+                <label for="{{ form.username.id_for_label }}" style="display: block; margin-bottom: 5px;">Usuário</label>
+                <input type="text" 
+                       name="{{ form.username.html_name }}" 
+                       id="{{ form.username.id_for_label }}" 
+                       value="{{ form.username.value|default_if_none:'' }}" 
+                       class="form-input" 
+                       required>
+                {% if form.username.errors %}
+                    <small style="color: #ff6b6b;">{{ form.username.errors.0 }}</small>
+                {% endif %}
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <label for="{{ form.password1.id_for_label }}" style="display: block; margin-bottom: 5px;">Senha</label>
+                <input type="password" 
+                       name="{{ form.password1.html_name }}" 
+                       id="{{ form.password1.id_for_label }}" 
+                       class="form-input" 
+                       required>
+                {% if form.password1.errors %}
+                    <small style="color: #ff6b6b;">{{ form.password1.errors.0 }}</small>
+                {% endif %}
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <label for="{{ form.password2.id_for_label }}" style="display: block; margin-bottom: 5px;">Confirmar Senha</label>
+                <input type="password" 
+                       name="{{ form.password2.html_name }}" 
+                       id="{{ form.password2.id_for_label }}" 
+                       class="form-input" 
+                       required>
+                {% if form.password2.errors %}
+                    <small style="color: #ff6b6b;">{{ form.password2.errors.0 }}</small>
+                {% endif %}
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 16px;">Cadastrar</button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <p>Já tem conta? <a href="{% url 'login' %}" style="color: #a78bfa; text-decoration: none;">Faça login</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-input {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 16px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .form-input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .form-input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.2);
+    }
+</style>
+{% endblock %}
