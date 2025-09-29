@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}Login - Echo Music{% endblock %}
+
+{% block content %}
+<div class="container" style="display: flex; justify-content: center; align-items: center; min-height: 80vh;">
+    <div class="login-card" style="background: rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); border-radius: 15px; padding: 40px; max-width: 400px; width: 100%;">
+        <h2 style="text-align: center; margin-bottom: 30px; font-size: 2rem;">Login</h2>
+        
+        {% if form.errors %}
+            <div style="background: rgba(244, 67, 54, 0.8); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+                <strong>Erro:</strong> Nome de usuário ou senha incorretos.
+            </div>
+        {% endif %}
+        
+        <form method="post">
+            {% csrf_token %}
+            <div style="margin-bottom: 20px;">
+                <label for="{{ form.username.id_for_label }}" style="display: block; margin-bottom: 5px;">Usuário</label>
+                <input type="text" 
+                       name="{{ form.username.html_name }}" 
+                       id="{{ form.username.id_for_label }}" 
+                       value="{{ form.username.value|default_if_none:'' }}" 
+                       class="form-input" 
+                       required>
+            </div>
+            
+            <div style="margin-bottom: 30px;">
+                <label for="{{ form.password.id_for_label }}" style="display: block; margin-bottom: 5px;">Senha</label>
+                <input type="password" 
+                       name="{{ form.password.html_name }}" 
+                       id="{{ form.password.id_for_label }}" 
+                       class="form-input" 
+                       required>
+            </div>
+            
+            <button type="submit" class="btn" style="width: 100%; padding: 15px; font-size: 16px;">Entrar</button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <p>Não tem conta? <a href="{% url 'signup' %}" style="color: #a78bfa; text-decoration: none;">Cadastre-se</a></p>
+        </div>
+    </div>
+</div>
+
+<style>
+    .form-input {
+        width: 100%;
+        padding: 15px;
+        border: none;
+        border-radius: 10px;
+        background: rgba(255, 255, 255, 0.1);
+        color: white;
+        font-size: 16px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .form-input::placeholder {
+        color: rgba(255, 255, 255, 0.7);
+    }
+    
+    .form-input:focus {
+        outline: none;
+        background: rgba(255, 255, 255, 0.2);
+    }
+</style>
+{% endblock %}
