@@ -1,9 +1,13 @@
+{% load static %}
 {% extends "base.html" %}
 
 {% block title %}Upload de Música - Echo Music{% endblock %}
 
 {% block content %}
 <div class="container" style="max-width: 600px; margin: 40px auto; background: rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 15px; backdrop-filter: blur(10px); color: white;">
+    <div style="text-align: center; margin-bottom: 20px;">
+        <img src="{% static 'Imagem_do_WhatsApp_de_2025-08-26_as_11.21.32_6d6c769a-removebg-preview.png' %}" alt="Echo Logo" style="max-width: 200px; height: auto;">
+    </div>
     <h2 style="text-align: center; margin-bottom: 20px;">Upload de Música</h2>
     {% if error %}
         <div style="background: rgba(244, 67, 54, 0.8); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
