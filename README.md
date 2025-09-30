@@ -53,7 +53,7 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 
 
 
-
+***Programação em par***
   Sessão do Dia 29/09/2025 - Desenvolvimento da Página Home
 Foco: Estrutura e componentes principais da página Home.
 
