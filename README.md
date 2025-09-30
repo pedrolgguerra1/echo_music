@@ -43,7 +43,11 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 ![backlog](backlogjira.jpg)
 
 
+
   [![Site](https://img.shields.io/badge/Acesse%20meu%20site-blue)](https://alvezz.pythonanywhere.com)
+
+
+  
   
   [▶️ **Screencast Deploy**](https://www.youtube.com/watch?v=XL0pxdvjNLw)
 
