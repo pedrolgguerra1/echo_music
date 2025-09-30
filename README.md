@@ -37,6 +37,10 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 
 <details>
 <summary>Entrega 02</summary>
+
+![sprint 2](echo_music/Imagem do WhatsApp de 2025-09-29 à(s) 22.15.09_68f2fd27.jpg)
+
+
 </details>
 
 <details>
