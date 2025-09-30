@@ -36,9 +36,11 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 </details>
 
 <details>
-<summary>Entrega 02</summary>
+<summary>✅Entrega - 02</summary>
 
 ![sprint 2](sprint2.jpg)
+
+![backlog](backlogjira.jpg)
 
 
   [![Site](https://img.shields.io/badge/Acesse%20meu%20site-blue)](https://alvezz.pythonanywhere.com)
