@@ -38,7 +38,31 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 <details>
 <summary>Entrega 02</summary>
 
-![sprint 2](echo_music/Imagem do WhatsApp de 2025-09-29 à(s) 22.15.09_68f2fd27.jpg)
+![sprint 2](sprint2.jpg)
+
+
+  [![Site](https://img.shields.io/badge/Acesse%20meu%20site-blue)](https://alvezz.pythonanywhere.com)
+  
+  [▶️ **Screencast Deploy**]([https://youtu.be/5f4h1V8EvZw?si=Puvt2TmS40G6oNOg](https://youtu.be/XL0pxdvjNLw?si=OU-u8zHauDHgJlo1))
+
+
+
+
+  Sessão do Dia 29/09/2025 - Desenvolvimento da Página Home
+Foco: Estrutura e componentes principais da página Home.
+
+Piloto (Driver): Pedro Guerra
+
+Navegador (Navigator): Ramses
+
+Atividades Realizadas:
+Criação da estrutura semântica do HTML da página Home (header, banner, serviços, footer).
+
+Estilização do layout principal com CSS.
+
+Implementação do menu de navegação.
+
+Ajustes de design para garantir a consistência visual em diferentes tamanhos de tela.
 
 
 </details>
