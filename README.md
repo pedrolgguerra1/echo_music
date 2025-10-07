@@ -13,6 +13,7 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 - 📱 **Design responsivo**, adaptado para desktop, tablet e celular.  
 - 🌙 **Tema claro e escuro** para se ajustar ao seu gosto.  
 
+
 ---
 
 ## 🛠️ Tecnologias Utilizadas
@@ -20,7 +21,7 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 - **Frontend:** HTML5, CSS3, JavaScript (React ou Vanilla JS)  
 - **Backend:** Python, Django  
 - **Banco de Dados:** MongoDB ou MySQL  
-- **Autenticação:** JWT ou OAuth 2.0  
+- **Autenticação:** JWT ou OAuth 2.0 . 
 - **Hospedagem:** Vercel / Netlify (frontend) e Heroku (backend)  
 
 ## Entregas
