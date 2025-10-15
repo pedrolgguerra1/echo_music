@@ -13,7 +13,6 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 - 📱 **Design responsivo**, adaptado para desktop, tablet e celular.  
 - 🌙 **Tema claro e escuro** para se ajustar ao seu gosto.  
 
-
 ---
 
 ## 🛠️ Tecnologias Utilizadas
