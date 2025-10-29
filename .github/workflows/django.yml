@@ -3,26 +3,17 @@ name: Deploy to PythonAnywhere
 on:
   push:
     branches:
-      - main  # ou outra branch de deploy
+      - main  # ou a branch que você usa no deploy
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Deploy to PythonAnywhere via SSH
-        uses: appleboy/ssh-action@v1.0.0
-        with:
-          host: yourusername.pythonanywhere.com
-          username: yourusername
-          key: ${{ secrets.PYTHONANYWHERE_SSH_KEY }}
-          script: |
-            cd /home/yourusername/yourproject
-            git pull origin main
-            workon yourvenv
-            pip install -r requirements.txt
-            python manage.py migrate --noinput
-            pa_reload_webapp yourusername.pythonanywhere.com
+      - name: Deploy via PythonAnywhere API
+        run: |
+          curl -X POST https://www.pythonanywhere.com/api/v0/user/<SEU_USERNAME>/webapps/<SEU_DOMINIO>.pythonanywhere.com/reload/ \
+          -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
