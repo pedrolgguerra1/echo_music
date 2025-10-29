@@ -24,6 +24,18 @@ class Music(models.Model):
         ordering = ['title']
 
 
+class Favorite(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    music = models.ForeignKey(Music, on_delete=models.CASCADE)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('user', 'music')
+
+    def __str__(self):
+        return f"{self.user.username} - {self.music.title}"
+
+
 class Playlist(models.Model):
     name = models.CharField(max_length=200)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="playlists")
