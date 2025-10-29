@@ -27,3 +27,4 @@ wsproto==1.2.0
 Pillow==10.4.0
 dj-database-url
 django-environ
+gunicorn
