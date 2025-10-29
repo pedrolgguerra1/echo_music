@@ -1,0 +1,28 @@
+name: Deploy to PythonAnywhere
+
+on:
+  push:
+    branches:
+      - main  # ou outra branch de deploy
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v3
+
+      - name: Deploy to PythonAnywhere via SSH
+        uses: appleboy/ssh-action@v1.0.0
+        with:
+          host: yourusername.pythonanywhere.com
+          username: yourusername
+          key: ${{ secrets.PYTHONANYWHERE_SSH_KEY }}
+          script: |
+            cd /home/yourusername/yourproject
+            git pull origin main
+            workon yourvenv
+            pip install -r requirements.txt
+            python manage.py migrate --noinput
+            pa_reload_webapp yourusername.pythonanywhere.com
