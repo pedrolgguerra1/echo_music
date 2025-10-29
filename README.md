@@ -38,6 +38,8 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 <details>
 <summary>✅Entrega - 02</summary>
 
+[![Site](https://img.shields.io/badge/Acesse%20o%20jira-blue)](https://ech0music.atlassian.net/jira/software/projects/SCRUM/summary?atlOrigin=eyJpIjoiMzAyZGU1NzY4YWVjNGJiN2E0NGM1YjFjZjZjOGI5ZjUiLCJwIjoiaiJ9)
+
 ![sprint 2](sprint2.jpg)
 
 ![backlog](backlogjira.jpg)
@@ -52,7 +54,7 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 
 
 
-
+***Programação em par***
   Sessão do Dia 29/09/2025 - Desenvolvimento da Página Home
 Foco: Estrutura e componentes principais da página Home.
 

@@ -1,0 +1,19 @@
+name: Deploy to PythonAnywhere
+
+on:
+  push:
+    branches:
+      - main  # dispara o deploy sempre que houver push na branch main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Deploy to PythonAnywhere via API
+        run: |
+          curl -X POST https://www.pythonanywhere.com/api/v0/user/alvezz/webapps/alvezz.pythonanywhere.com/reload/ \
+          -H "Authorization: Token ${{ secrets.PYTHONANYWHERE_API_TOKEN }}"
