@@ -4,6 +4,24 @@
 {% block title %}Upload de Música - Echo Music{% endblock %}
 
 {% block content %}
+<style>
+.form-input {
+    background: transparent;
+    border: 1px solid #ccc;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    width: 100%;
+    margin-bottom: 10px;
+}
+.form-input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+.form-input:focus {
+    outline: none;
+    border-color: #888;
+}
+</style>
 <div class="container" style="max-width: 600px; margin: 40px auto; background: rgba(255, 255, 255, 0.1); padding: 30px; border-radius: 15px; backdrop-filter: blur(10px); color: white;">
     <div style="text-align: center; margin-bottom: 20px;">
         <img src="{% static 'Imagem_do_WhatsApp_de_2025-08-26_as_11.21.32_6d6c769a-removebg-preview.png' %}" alt="Echo Logo" style="max-width: 200px; height: auto;">
