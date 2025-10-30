@@ -68,6 +68,14 @@ Navegador (Navigator): Ramses
 
 ![sprint 3](sprint3.jpg)
 
+
+***Programação em par***
+sessão do Dia 20/10/2025 - Desenvolvimento das historias e preparação da implementação junto com o deploy
+foco: estrutura das novas funcionalidades
+Piloto (Driver): Pedro Guerra
+Navegador (Navigator): Ramses
+
+
 **Atividades Realizadas (Implementação das Histórias):**
 - Integração do player com backend para reprodução de músicas.
 - Testes unitários iniciais para funcionalidades críticas do player.
