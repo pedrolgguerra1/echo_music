@@ -21,7 +21,7 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 - **Backend:** Python, Django  
 - **Banco de Dados:** MongoDB ou MySQL  
 - **Autenticação:** JWT ou OAuth 2.0  
-- **Hospedagem:** Vercel / Netlify (frontend) e Render / Heroku (backend)  
+- **Hospedagem:** Vercel / Netlify (frontend) e Heroku (backend)  
 
 ## Entregas
 <details>
@@ -44,40 +44,47 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 
 ![backlog](backlogjira.jpg)
 
+[![Site](https://img.shields.io/badge/Acesse%20meu%20site-blue)](https://alvezz.pythonanywhere.com)
 
+[▶️ **Screencast Deploy**](https://www.youtube.com/watch?v=XL0pxdvjNLw)
 
-  [![Site](https://img.shields.io/badge/Acesse%20meu%20site-blue)](https://alvezz.pythonanywhere.com)
-
-  
-  
-  [▶️ **Screencast Deploy**](https://www.youtube.com/watch?v=XL0pxdvjNLw)
-
-
-
-***Programação em par***
-  Sessão do Dia 29/09/2025 - Desenvolvimento da Página Home
+***Programação em par***  
+Sessão do Dia 29/09/2025 - Desenvolvimento da Página Home  
 Foco: Estrutura e componentes principais da página Home.
 
-Piloto (Driver): Pedro Guerra
-
+Piloto (Driver): Pedro Guerra  
 Navegador (Navigator): Ramses
 
-Atividades Realizadas:
-Criação da estrutura semântica do HTML da página Home (header, banner, serviços, footer).
-
-Estilização do layout principal com CSS.
-
-Implementação do menu de navegação.
-
-Ajustes de design para garantir a consistência visual em diferentes tamanhos de tela.
-
+**Atividades Realizadas:**
+- Criação da estrutura semântica do HTML da página Home (header, banner, serviços, footer).
+- Estilização do layout principal com CSS.
+- Implementação do menu de navegação.
+- Ajustes de design para garantir a consistência visual em diferentes tamanhos de tela.
 
 </details>
 
 <details>
-<summary>Entrega 03</summary>
+<summary>✅Entrega - 03</summary>
+
+![sprint 3](sprint3.jpg)
+
+**Atividades Realizadas (Implementação das Histórias):**
+- Integração do player com backend para reprodução de músicas.
+- Testes unitários iniciais para funcionalidades críticas do player.
+
+**Ajustes no Deploy:**
+- Configuração de variáveis de ambiente no backend e frontend.
+- Correção de problemas de rota e CORS.
+- Ajustes no build para compatibilidade com Vercel (frontend).
+
+**Implementação CI/CD:**
+- Configuração de pipeline no GitHub Actions:
+  - Build automático do frontend e backend.
+  - Execução de testes unitários e linting.
+  - Deploy automático em ambiente de staging após aprovação.
+
 </details>
 
 <details>
-<summary>Entrega 04</summary>
+<summary>✅Entrega - 04</summary>
 </details>
