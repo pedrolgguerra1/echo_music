@@ -68,7 +68,7 @@ def upload_music(request):
             cover=cover
         )
         music.save()
-        return redirect("player")
+        return redirect("player")  # or redirect to a success page
     else:
         # Provide artists for selection
         from .models import Artist

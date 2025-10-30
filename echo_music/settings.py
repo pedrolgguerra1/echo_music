@@ -8,39 +8,22 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
 from pathlib import Path
-import os
-import environ
-import dj_database_url
 
 # Diretório base do projeto
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-# Configuração do django-environ
-env = environ.Env(
-    DEBUG=(bool, False)
-)
-
-# Lê o .env se existir
-environ.Env.read_env(os.path.join(BASE_DIR, ".env"))
-
 # ============================
 # Segurança
 # ============================
-SECRET_KEY = env("SECRET_KEY", default="unsafe-secret-key")
-DEBUG = env("DEBUG", default=False)
+SECRET_KEY = "unsafe-secret-key"
+DEBUG = True
 
-ALLOWED_HOSTS = env.list(
-    "ALLOWED_HOSTS",
-    default=["*"]
-)
+ALLOWED_HOSTS = ["*"]
 
-CSRF_TRUSTED_ORIGINS = env.list(
-    "CSRF_TRUSTED_ORIGINS",
-    default=[
-        "http://127.0.0.1:8000",
-        "http://localhost:8000",
-    ]
-)
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000",
+]
 
 # ============================
 # Aplicativos
@@ -90,30 +73,12 @@ WSGI_APPLICATION = 'echo_music.wsgi.application'
 # ============================
 # Banco de Dados
 # ============================
-# Verifica se DATABASE_URL foi definida
-DATABASE_URL = env("DATABASE_URL", default=None)
-
-if DATABASE_URL and DATABASE_URL.startswith('sqlite'):
-    # Para SQLite, usa configuração simples sem parâmetros extras
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-elif DATABASE_URL:
-    # Para outros bancos (PostgreSQL, MySQL, etc), usa dj_database_url
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL, conn_max_age=600, ssl_require=True)
-    }
-else:
-    # Fallback padrão para SQLite
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
+}
 
 # ============================
 # Validação de Senha
@@ -132,6 +97,12 @@ LANGUAGE_CODE = "pt-br"
 TIME_ZONE = "America/Recife"
 USE_I18N = True
 USE_TZ = True
+
+# ============================
+# Autenticação
+# ============================
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/

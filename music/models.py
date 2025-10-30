@@ -13,7 +13,7 @@ class Music(models.Model):
     title = models.CharField(max_length=200)
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     duration = models.CharField(max_length=10)  # formato "2:30"
-    file_url = models.URLField(blank=True, null=True)
+    file_url = models.FileField(upload_to="music/", blank=True, null=True)
     cover = models.ImageField(upload_to="covers/", blank=True, null=True)  # nova capa
     created_at = models.DateTimeField(auto_now_add=True)
 
