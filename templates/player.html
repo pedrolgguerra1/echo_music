@@ -211,6 +211,56 @@
   });
   {% endif %}
 
+  // Navegação na fila
+  {% if user.is_authenticated %}
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  nextBtn.addEventListener('click', () => {
+    fetch('/music/next/?current_music_id={{ current_music.id }}', {
+      method: 'GET',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.id) {
+        // Atualizar a página para a próxima música
+        window.location.href = '/music/player/?music_id=' + data.id;
+      } else {
+        showToast('Nenhuma próxima música na fila!');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      showToast('Erro ao navegar para próxima música!');
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    fetch('/music/prev/?current_music_id={{ current_music.id }}', {
+      method: 'GET',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.id) {
+        // Atualizar a página para a música anterior
+        window.location.href = '/music/player/?music_id=' + data.id;
+      } else {
+        showToast('Nenhuma música anterior na fila!');
+      }
+    })
+    .catch(error => {
+      console.error('Error:', error);
+      showToast('Erro ao navegar para música anterior!');
+    });
+  });
+  {% endif %}
+
   // Selecionar música do showcase
   document.querySelectorAll('.music-item').forEach(item => {
     item.addEventListener('click', () => {

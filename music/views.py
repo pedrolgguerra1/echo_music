@@ -134,3 +134,45 @@ def get_queue(request):
     musics = Music.objects.filter(id__in=queue_ids).order_by('id')
     queue_data = [{'id': music.id, 'title': music.title, 'artist': music.artist.name, 'duration': music.duration} for music in musics]
     return JsonResponse({'queue': queue_data})
+
+
+@login_required
+def next_music(request):
+    """Avança para a próxima música na fila"""
+    queue_ids = request.session.get('music_queue', [])
+    current_music_id = request.GET.get('current_music_id')
+    if current_music_id and queue_ids:
+        current_music_id = int(current_music_id)
+        if current_music_id in queue_ids:
+            current_index = queue_ids.index(current_music_id)
+            next_index = (current_index + 1) % len(queue_ids)
+            next_music_id = queue_ids[next_index]
+            next_music = get_object_or_404(Music, id=next_music_id)
+            return JsonResponse({
+                'id': next_music.id,
+                'title': next_music.title,
+                'artist': next_music.artist.name,
+                'duration': next_music.duration
+            })
+    return JsonResponse({'error': 'No next music in queue'}, status=404)
+
+
+@login_required
+def prev_music(request):
+    """Volta para a música anterior na fila"""
+    queue_ids = request.session.get('music_queue', [])
+    current_music_id = request.GET.get('current_music_id')
+    if current_music_id and queue_ids:
+        current_music_id = int(current_music_id)
+        if current_music_id in queue_ids:
+            current_index = queue_ids.index(current_music_id)
+            prev_index = (current_index - 1) % len(queue_ids)
+            prev_music_id = queue_ids[prev_index]
+            prev_music = get_object_or_404(Music, id=prev_music_id)
+            return JsonResponse({
+                'id': prev_music.id,
+                'title': prev_music.title,
+                'artist': prev_music.artist.name,
+                'duration': prev_music.duration
+            })
+    return JsonResponse({'error': 'No previous music in queue'}, status=404)
