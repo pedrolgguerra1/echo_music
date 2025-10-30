@@ -20,6 +20,15 @@
       {% if current_music %}{{ current_music.artist.name }}{% else %}Artista{% endif %}
     </p>
 
+    <!-- Botão Favoritar -->
+    {% if user.is_authenticated and current_music %}
+    <div class="mb-4 text-center">
+      <button id="favoriteBtn" class="px-4 py-2 rounded-full bg-pink-500 hover:bg-pink-600 text-white font-semibold transition duration-300">
+        {% if is_favorite %}❤️ Remover dos Favoritos{% else %}🤍 Adicionar aos Favoritos{% endif %}
+      </button>
+    </div>
+    {% endif %}
+
     <!-- Controles -->
     <div class="flex items-center justify-center gap-6 mb-6">
       <button id="prevBtn" class="w-12 h-12 rounded-full bg-purple-500/30 hover:bg-purple-500 flex items-center justify-center text-2xl shadow-lg">⏮️</button>
@@ -57,7 +66,7 @@
     <!-- 🖼️ Mostruário (grid de álbuns/playlists) -->
     <div class="grid grid-cols-3 gap-4">
       {% for item in showcase_items %}
-      <div class="bg-white/10 rounded-xl overflow-hidden shadow-md hover:scale-105 transform transition duration-300 cursor-pointer">
+      <div class="bg-white/10 rounded-xl overflow-hidden shadow-md hover:scale-105 transform transition duration-300 cursor-pointer music-item" data-music-id="{{ item.id }}">
         {% if item.cover %}
           <img src="{{ item.cover.url }}" alt="{{ item.title }}" class="w-full h-32 object-cover">
         {% else %}
@@ -82,16 +91,17 @@
 
         {% for music in next_musics %}
         <div class="flex items-center gap-3 mb-3 bg-black/30 p-2 rounded-lg shadow
-                    hover:bg-purple-600/40 hover:scale-105 transform transition duration-300 cursor-pointer">
+                    hover:bg-purple-600/40 hover:scale-105 transform transition duration-300 cursor-pointer music-item" data-music-id="{{ music.id }}">
           {% if music.cover %}
             <img src="{{ music.cover.url }}" class="w-12 h-12 rounded-md">
           {% else %}
             <img src="{% static 'images/default_cover.jpg' %}" class="w-12 h-12 rounded-md">
           {% endif %}
-          <div>
+          <div class="flex-1">
             <p class="font-semibold">{{ music.title }}</p>
             <span class="text-sm opacity-70">{{ music.duration|default:"--:--" }}</span>
           </div>
+          <button class="add-to-queue-btn px-2 py-1 bg-purple-500 hover:bg-purple-600 text-white text-xs rounded" data-music-id="{{ music.id }}">+</button>
         </div>
         {% empty %}
         <p class="opacity-70">Nenhuma música na fila 🎶</p>
@@ -139,6 +149,14 @@
   audio.src = "{{ current_music.file_url }}";
   {% endif %}
 
+  // Autoplay se música foi selecionada
+  {% if autoplay %}
+  audio.addEventListener('loadedmetadata', () => {
+    audio.play();
+    playBtn.innerText = '⏸️';
+  });
+  {% endif %}
+
   playBtn.addEventListener('click', () => {
     if (audio.paused) {
       audio.play();
@@ -168,6 +186,81 @@
       audio.currentTime = (e.target.value / 100) * audio.duration;
     }
   });
+
+  // Favoritar música
+  {% if user.is_authenticated and current_music %}
+  const favoriteBtn = document.getElementById('favoriteBtn');
+  favoriteBtn.addEventListener('click', () => {
+    fetch('/music/favorite/{{ current_music.id }}/', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json',
+      },
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === 'added') {
+        favoriteBtn.innerText = '❤️ Remover dos Favoritos';
+        showToast('Música adicionada aos favoritos!');
+      } else {
+        favoriteBtn.innerText = '🤍 Adicionar aos Favoritos';
+        showToast('Música removida dos favoritos!');
+      }
+    });
+  });
+  {% endif %}
+
+  // Selecionar música do showcase
+  document.querySelectorAll('.music-item').forEach(item => {
+    item.addEventListener('click', () => {
+      const musicId = item.getAttribute('data-music-id');
+      window.location.href = '/music/player/?music_id=' + musicId;
+    });
+  });
+
+  // Adicionar música à fila
+  document.querySelectorAll('.add-to-queue-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation(); // Evita que o clique no botão também clique no item da música
+      const musicId = btn.getAttribute('data-music-id');
+      fetch('/music/queue/add/' + musicId + '/', {
+        method: 'POST',
+        headers: {
+          'X-CSRFToken': '{{ csrf_token }}',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => response.json())
+      .then(data => {
+        showToast(data.message);
+        if (data.status === 'added') {
+          btn.textContent = '✓';
+          btn.classList.add('bg-green-500', 'hover:bg-green-600');
+          btn.classList.remove('bg-purple-500', 'hover:bg-purple-600');
+        }
+      });
+    });
+  });
+
+  // Função para mostrar toast
+  function showToast(message) {
+    const toast = document.createElement('div');
+    toast.innerText = message;
+    toast.style.position = 'fixed';
+    toast.style.top = '20px';
+    toast.style.right = '20px';
+    toast.style.background = 'rgba(0, 0, 0, 0.8)';
+    toast.style.color = 'white';
+    toast.style.padding = '10px 20px';
+    toast.style.borderRadius = '5px';
+    toast.style.zIndex = '1000';
+    toast.style.fontSize = '14px';
+    document.body.appendChild(toast);
+    setTimeout(() => {
+      document.body.removeChild(toast);
+    }, 3000);
+  }
 </script>
 
 {% endblock %}

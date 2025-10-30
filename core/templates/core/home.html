@@ -37,6 +37,7 @@
     {% endif %}
     {% if user.is_authenticated %}
         <button class="btn" style="margin-top: 20px;" onclick="location.href='/music/upload/'">Adicionar Música</button>
+        <button class="btn" style="margin-top: 10px;" onclick="location.href='/music/player/'">Ir ao Player</button>
     {% endif %}
 </div>
 
@@ -71,6 +72,9 @@
                 {% if user.is_authenticated %}
                     <button class="btn" onclick="showAddToPlaylistModal({{ music.id }}, '{{ music.title }}')">
                         Adicionar à Playlist
+                    </button>
+                    <button class="btn" style="margin-top: 5px;" onclick="addToQueue({{ music.id }}, '{{ music.title }}')">
+                        Adicionar à Fila
                     </button>
                 {% endif %}
             </div>
@@ -178,6 +182,20 @@ document.getElementById('searchInput').addEventListener('input', function() {
         this.form.submit();
     }, 500);
 });
+
+function addToQueue(musicId, musicTitle) {
+    fetch('/music/queue/add/' + musicId + '/', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'X-CSRFToken': getCookie('csrftoken')
+        },
+    })
+    .then(response => response.json())
+    .then(data => {
+        alert(data.message);
+    });
+}
 </script>
 {% endblock %}
 
