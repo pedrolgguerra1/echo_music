@@ -72,10 +72,11 @@
         {% else %}
           <img src="{% static 'images/default_showcase.jpg' %}" alt="{{ item.title }}" class="w-full h-32 object-cover">
         {% endif %}
-        <div class="p-2">
-          <p class="font-semibold truncate">{{ item.title }}</p>
-          <p class="text-sm opacity-70 truncate">{% if item.artist %}{{ item.artist.name }}{% endif %}</p>
-        </div>
+    <div class="p-2">
+      <p class="font-semibold truncate">{{ item.title }}</p>
+      <p class="text-sm opacity-70 truncate">{% if item.artist %}{{ item.artist.name }}{% endif %}</p>
+      <button class="add-to-queue-btn px-2 py-1 bg-purple-500 hover:bg-purple-600 text-white text-xs rounded" data-music-id="{{ item.id }}">+</button>
+    </div>
       </div>
       {% empty %}
       <p class="opacity-70 col-span-3">Nenhum destaque no momento ✨</p>
