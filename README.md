@@ -74,14 +74,11 @@ Navegador (Navigator): Ramses
 
 **Ajustes no Deploy:**
 - Configuração de variáveis de ambiente no backend e frontend.
-- Correção de problemas de rota e CORS.
-- Ajustes no build para compatibilidade com Vercel (frontend).
+- Ajustes no build para compatibilidade com Vercel.
 
 **Implementação CI/CD:**
 - Configuração de pipeline no GitHub Actions:
   - Build automático do frontend e backend.
-  - Execução de testes unitários e linting.
-  - Deploy automático em ambiente de staging após aprovação.
 
 </details>
 
