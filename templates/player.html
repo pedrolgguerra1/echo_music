@@ -2,6 +2,8 @@
 {% load static %}
 {% block content %}
 
+<meta name="csrf-token" content="{{ csrf_token }}" />
+
 <div class="flex h-screen bg-gradient-to-b from-indigo-700 via-purple-700 to-purple-800 text-white p-6 gap-6">
 
   <!-- 🎵 Player (lado esquerdo) -->
@@ -217,6 +219,60 @@
     item.addEventListener('click', () => {
       const musicId = item.getAttribute('data-music-id');
       window.location.href = '/music/player/?music_id=' + musicId;
+    });
+  });
+
+  // Navegação da fila (próximo/anterior)
+  const nextBtn = document.getElementById('nextBtn');
+  const prevBtn = document.getElementById('prevBtn');
+
+  nextBtn.addEventListener('click', () => {
+    fetch('/music/next/', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        current_music_id: {{ current_music.id|default:0 }}
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.next_music_id) {
+        window.location.href = '/music/player/?music_id=' + data.next_music_id;
+      } else {
+        showToast(data.message || 'Erro na navegação');
+      }
+    })
+    .catch(error => {
+      console.error('Erro na navegação:', error);
+      showToast('Erro ao navegar na fila');
+    });
+  });
+
+  prevBtn.addEventListener('click', () => {
+    fetch('/music/prev/', {
+      method: 'POST',
+      headers: {
+        'X-CSRFToken': '{{ csrf_token }}',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        current_music_id: {{ current_music.id|default:0 }}
+      })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.prev_music_id) {
+        window.location.href = '/music/player/?music_id=' + data.prev_music_id;
+      } else {
+        showToast(data.message || 'Erro na navegação');
+      }
+    })
+    .catch(error => {
+      console.error('Erro na navegação:', error);
+      showToast('Erro ao navegar na fila');
     });
   });
 

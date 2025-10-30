@@ -20,7 +20,7 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 - **Frontend:** HTML5, CSS3, JavaScript (React ou Vanilla JS)  
 - **Backend:** Python, Django  
 - **Banco de Dados:** MongoDB ou MySQL  
-- **Autenticação:** JWT ou OAuth 2.0  
+- **Autenticação:** JWT ou OAuth 2.0 . 
 - **Hospedagem:** Vercel / Netlify (frontend) e Heroku (backend)  
 
 ## Entregas
@@ -29,6 +29,7 @@ Com ele, você pode explorar playlists, descobrir novos artistas e curtir suas f
 
  **Quadro Jira**
 ![Backlog do Echo](./9b9bcbfe-3674-4ebf-bd80-5903eb4a3c72.png)
+
 
 [📄 **Documentação no Google Docs**](https://docs.google.com/document/d/1iIE2TN-brDPJG4-VLgA5vC3a-OJslN4rudeJ6qXee54/edit?tab=t.0#heading=h.ydhtqjk9ltrr)
 
@@ -68,20 +69,27 @@ Navegador (Navigator): Ramses
 
 ![sprint 3](sprint3.jpg)
 
+
+[▶️ **Screencast Deploy**]([https://www.youtube.com/watch?v=XL0pxdvjNLw](https://youtu.be/yEldrKc7uEs?si=b0utGYSF11F_M0df))
+
+***Programação em par***
+sessão do Dia 20/10/2025 - Desenvolvimento das historias e preparação da implementação junto com o deploy
+foco: estrutura das novas funcionalidades
+Piloto (Driver): Pedro Guerra
+Navegador (Navigator): Lucas Samuel
+
+
 **Atividades Realizadas (Implementação das Histórias):**
 - Integração do player com backend para reprodução de músicas.
 - Testes unitários iniciais para funcionalidades críticas do player.
 
 **Ajustes no Deploy:**
 - Configuração de variáveis de ambiente no backend e frontend.
-- Correção de problemas de rota e CORS.
-- Ajustes no build para compatibilidade com Vercel (frontend).
+- Ajustes no build para compatibilidade com Vercel.
 
 **Implementação CI/CD:**
 - Configuração de pipeline no GitHub Actions:
   - Build automático do frontend e backend.
-  - Execução de testes unitários e linting.
-  - Deploy automático em ambiente de staging após aprovação.
 
 </details>
 
