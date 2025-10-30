@@ -71,7 +71,7 @@ Navegador (Navigator): Ramses
 
 ![bug/issues tracker](issues.png)
 
-[▶️ **Screencast Deploy**]([https://www.youtube.com/watch?v=XL0pxdvjNLw](https://youtu.be/yEldrKc7uEs?si=b0utGYSF11F_M0df))
+[▶️ **Screencast Deploy**](https://youtu.be/yEldrKc7uEs?si=b0utGYSF11F_M0df)
 
 ***Programação em par***
 sessão do Dia 20/10/2025 - Desenvolvimento das historias e preparação da implementação junto com o deploy
