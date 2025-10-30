@@ -70,11 +70,13 @@ Navegador (Navigator): Ramses
 ![sprint 3](sprint3.jpg)
 
 
+[▶️ **Screencast Deploy**]([https://www.youtube.com/watch?v=XL0pxdvjNLw](https://youtu.be/yEldrKc7uEs?si=b0utGYSF11F_M0df))
+
 ***Programação em par***
 sessão do Dia 20/10/2025 - Desenvolvimento das historias e preparação da implementação junto com o deploy
 foco: estrutura das novas funcionalidades
 Piloto (Driver): Pedro Guerra
-Navegador (Navigator): Ramses
+Navegador (Navigator): Lucas Samuel
 
 
 **Atividades Realizadas (Implementação das Histórias):**
