@@ -69,6 +69,7 @@ Navegador (Navigator): Ramses
 
 ![sprint 3](sprint3.jpg)
 
+![bug/issues tracker](issues.png)
 
 [▶️ **Screencast Deploy**]([https://www.youtube.com/watch?v=XL0pxdvjNLw](https://youtu.be/yEldrKc7uEs?si=b0utGYSF11F_M0df))
 
