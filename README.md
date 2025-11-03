@@ -95,5 +95,5 @@ Navegador (Navigator): Lucas Samuel
 </details>
 
 <details>
-<summary>Entrega - 04</summary>
+<summary>✅Entrega - 04</summary>
 </details>
