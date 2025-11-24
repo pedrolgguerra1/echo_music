@@ -4,6 +4,9 @@ on:
   push:
     branches:
       - main  # dispara o workflow sempre que houver push na branch main
+  pull_request:
+    branches:
+      - main  # roda CI também em PRs para a main
 
 jobs:
   build:
@@ -24,12 +27,12 @@ jobs:
           python -m pip install --upgrade pip
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
 
-      - name: Run tests
+      - name: Run checks and tests
         run: |
-          # rode seus testes aqui (opcional)
-          # se não houver testes ainda, isso será ignorado
           echo "Running Django checks..."
           python manage.py check
+          echo "Running Django tests..."
+          python manage.py test
 
       - name: Collect static files
         run: |
@@ -45,6 +48,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy to PythonAnywhere via API
+        if: github.event_name == 'push'  # só faz deploy em push (não em PR)
         env:
           PYTHONANYWHERE_API_TOKEN: ${{ secrets.PYTHONANYWHERE_API_TOKEN }}
         run: |
