@@ -28,3 +28,4 @@ Pillow==10.4.0
 dj-database-url
 django-environ
 gunicorn
+mutagen==1.47.0

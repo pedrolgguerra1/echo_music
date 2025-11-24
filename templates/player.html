@@ -61,8 +61,7 @@
     <!-- 🔍 Barra de busca + usuário -->
     <div class="flex justify-between items-center bg-white/10 rounded-xl p-3 shadow-md">
       <input type="text" placeholder="Buscar..." class="bg-transparent outline-none w-full px-2 text-white placeholder-gray-300">
-      <img src="{% if request.user.is_authenticated and request.user.profile.image %}{{ request.user.profile.image.url }}{% else %}{% static 'images/default_user.png' %}{% endif %}"
-           alt="User" class="w-10 h-10 rounded-full ml-4">
+      <i class="bx bx-user-circle text-3xl ml-4 bg-white/20 rounded-full p-2"></i>
     </div>
 
     <!-- 🖼️ Mostruário (grid de álbuns/playlists) -->
@@ -149,7 +148,7 @@
 
   // Se current_music tiver file_url, já seta
   {% if current_music and current_music.file_url %}
-  audio.src = "{{ current_music.file_url }}";
+  audio.src = "{{ current_music.file_url.url|escapejs }}";
   {% endif %}
 
   // Autoplay se música foi selecionada
