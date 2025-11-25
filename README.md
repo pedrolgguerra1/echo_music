@@ -103,6 +103,10 @@ Navegador (Navigator): Lucas Samuel
 
 [▶️ **Screencast Deploy**](https://youtu.be/bjmRcy088BA?si=JOn8UDJXUZpSIW5m)
 
+
+
+![Print Bug/Issues Tracker](bugtracker.png)
+
 ***Relato de Programação em Par*** – 02/11/2025
 
 Durante a sessão de programação em par realizada em 20/10/2025, com Pedro Guerra como Piloto (Driver) e Lucas Samuel como Navegador (Navigator), finalizamos as últimas histórias planejadas para o ciclo atual. As atividades concluídas envolveram o desenvolvimento e integração das funcionalidades pendentes, garantindo que todas estivessem prontas para a fase de implementação completa e para o processo de deploy.
