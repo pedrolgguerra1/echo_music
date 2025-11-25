@@ -104,6 +104,9 @@ Navegador (Navigator): Lucas Samuel
 [▶️ **Screencast Deploy**](https://youtu.be/bjmRcy088BA?si=JOn8UDJXUZpSIW5m)
 
 
+[▶️ **Screencast build**](https://youtu.be/cqlpRBFRUkY?si=Dqw6cnTNqDLp4yWN)
+
+
 
 ![Print Bug/Issues Tracker](bugtracker.png)
 
