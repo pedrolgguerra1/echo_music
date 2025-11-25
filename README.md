@@ -96,4 +96,18 @@ Navegador (Navigator): Lucas Samuel
 
 <details>
 <summary>✅Entrega - 04</summary>
+
+[▶️ **Screencast Testes**](https://youtu.be/382rkh2EzDI?si=NpW2iU0uDMhbUsmk)
+
+
+
+[▶️ **Screencast Deploy**](https://youtu.be/bjmRcy088BA?si=JOn8UDJXUZpSIW5m)
+
+***Relato de Programação em Par*** – 02/11/2025
+
+Durante a sessão de programação em par realizada em 20/10/2025, com Pedro Guerra como Piloto (Driver) e Lucas Samuel como Navegador (Navigator), finalizamos as últimas histórias planejadas para o ciclo atual. As atividades concluídas envolveram o desenvolvimento e integração das funcionalidades pendentes, garantindo que todas estivessem prontas para a fase de implementação completa e para o processo de deploy.
+
+As histórias foram revisadas, ajustadas e concluídas conforme os critérios de aceitação, assegurando alinhamento técnico e funcional com os objetivos do projeto.
+
+Se quiser, posso gerar uma versão mais formal, mais detalhada ou mais curta.
 </details>
