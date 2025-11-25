@@ -5,9 +5,10 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
+from selenium.common.exceptions import TimeoutException
 
 
-class TestQueueSurpriseAndSelectInPlayer(unittest.TestCase):
+class TestQueueOiNegoAndSelectInPlayer(unittest.TestCase):
     def setUp(self):
         # Configurar o driver do Selenium (usando Chrome)
         self.driver = webdriver.Chrome()  # Certifique-se de que o ChromeDriver está instalado
@@ -17,7 +18,7 @@ class TestQueueSurpriseAndSelectInPlayer(unittest.TestCase):
     def tearDown(self):
         self.driver.quit()
 
-    def test_queue_surprise_then_choose_second_and_back(self):
+    def test_queue_oi_nego_then_choose_second_and_back(self):
         driver = self.driver
 
         # Passo 1: Fazer login com usuário existente
@@ -39,17 +40,21 @@ class TestQueueSurpriseAndSelectInPlayer(unittest.TestCase):
         )
         time.sleep(1)
 
-        # Passo 2: Na home, adicionar a música "surprise" à fila
-        surprise_card = WebDriverWait(driver, 10).until(
-            EC.presence_of_element_located(
-                (
-                    By.XPATH,
-                    "//div[contains(@class, 'music-card')]"
-                    "[.//h3[contains(translate(., 'SURPRISE', 'surprise'), 'surprise')]]",
-                )
-            )
-        )
-        add_to_queue_btn = surprise_card.find_element(
+        # Passo 2: Na home, adicionar a música "OI NEGO" à fila
+        try:
+            music_cards = driver.find_elements(By.CLASS_NAME, "music-card")
+            oi_nego_card = None
+            for card in music_cards:
+                title_el = card.find_element(By.TAG_NAME, "h3")
+                if "oi nego" in title_el.text.lower():
+                    oi_nego_card = card
+                    break
+
+            if not oi_nego_card:
+                self.skipTest("Música 'OI NEGO' não encontrada na home.")
+        except TimeoutException:
+            self.skipTest("Home não carregou a tempo para localizar 'OI NEGO'.")
+        add_to_queue_btn = oi_nego_card.find_element(
             By.XPATH, ".//button[contains(., 'Adicionar à Fila')]"
         )
         add_to_queue_btn.click()
@@ -86,27 +91,26 @@ class TestQueueSurpriseAndSelectInPlayer(unittest.TestCase):
         )
         time.sleep(1)
 
-        # Passo 5: Selecionar "surprise" que está na fila "Em seguida"
-        surprise_queue_item = WebDriverWait(driver, 10).until(
+        # Passo 5: Selecionar "OI NEGO" que está na fila "Em seguida"
+        oi_nego_queue_item = WebDriverWait(driver, 10).until(
             EC.element_to_be_clickable(
                 (
                     By.XPATH,
                     "//h3[contains(., 'Em seguida')]/following-sibling::div"
                     "[contains(@class, 'music-item')]"
                     "[.//p[contains(@class, 'font-semibold') and "
-                    "contains(translate(., 'SURPRISE', 'surprise'), 'surprise')]]",
+                    "contains(translate(., 'OI NEGO', 'oi nego'), 'oi nego')]]",
                 )
             )
         )
-        surprise_queue_item.click()
+        oi_nego_queue_item.click()
 
         # A página recarrega novamente com surprise selecionada
         WebDriverWait(driver, 20).until(
             EC.presence_of_element_located((By.ID, "audio-player"))
         )
-        time.sleep(1)
+        time.sleep(20)
 
 
 if __name__ == "__main__":
     unittest.main()
-

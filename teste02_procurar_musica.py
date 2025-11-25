@@ -36,16 +36,16 @@ class TestSearchMusic(unittest.TestCase):
         # Aguardar carregamento da página inicial (presença do input de busca)
         WebDriverWait(driver, 20).until(EC.presence_of_element_located((By.ID, "searchInput")))
 
-        # Passo 2: Pesquisar por uma música (usando uma música genérica ou existente)
-        search_query = "Bohemian Rhapsody"  # Pode ser qualquer música, assumindo que existe ou testando a funcionalidade
+        # Passo 2: Pesquisar por uma música que exista no catálogo
+        # Usamos "OI NEGO", que está cadastrada via importação local
+        search_query = "OI NEGO"
         search_input = driver.find_element(By.ID, "searchInput")
         search_input.clear()
         time.sleep(1)
         search_input.send_keys(search_query)
-        time.sleep(1)
-        # O formulário é submetido automaticamente após 500ms, mas para garantir, podemos submeter manualmente
-        search_input.send_keys(Keys.RETURN)
-        time.sleep(1)
+        time.sleep(3)
+        # O formulário é submetido automaticamente após 500ms pelo JS da página,
+        # então não precisamos enviar ENTER manualmente (evita elemento "stale").
 
         # Passo 3: Verificar se os resultados da busca aparecem
         # Aguardar que a página recarregue com os resultados

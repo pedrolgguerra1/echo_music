@@ -67,14 +67,26 @@ class TestPlayerFavoritesAndQueue(unittest.TestCase):
                 # Verificar se o botão mudou para "✓" ou algo similar
                 self.assertEqual(add_to_queue_btns[0].text, "✓")
                 time.sleep(1)
+
+                # Recarregar o player para que a seção "Em seguida" reflita a fila da sessão
+                driver.refresh()
+                WebDriverWait(driver, 20).until(
+                    EC.presence_of_element_located((By.ID, "audio-player"))
+                )
         except:
             # Se não houver botões, pular
             pass
 
         # Passo 5: Verificar se a música foi adicionada à seção "Em seguida"
-        next_section = driver.find_element(By.XPATH, "//h3[text()='Em seguida:']")
+        next_section = WebDriverWait(driver, 10).until(
+            EC.presence_of_element_located((By.XPATH, "//h3[text()='Em seguida:']"))
+        )
         time.sleep(1)
-        next_musics = next_section.find_elements(By.XPATH, "../div[@class='flex items-center gap-3 mb-3 bg-black/30 p-2 rounded-lg shadow hover:bg-purple-600/40 hover:scale-105 transform transition duration-300 cursor-pointer music-item']")
+        next_musics = driver.find_elements(
+            By.XPATH,
+            "//h3[text()='Em seguida:']/following-sibling::div"
+            "[contains(@class, 'music-item')]",
+        )
         time.sleep(1)
         # Assumir que pelo menos uma música foi adicionada
         self.assertGreater(len(next_musics), 0, "Nenhuma música na fila 'Em seguida'")
